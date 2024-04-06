@@ -12,6 +12,7 @@ argument_parser.add_argument('--default-branch', type=str, default='main')
 argument_parser.add_argument('--default-profile', type=str, required=True)
 argument_parser.add_argument('--raw-gh-content-url', type=str, default='https://raw.githubusercontent.com')
 argument_parser.add_argument('--exclusions-file', type=str, default='mkdocs.yml')
+argument_parser.add_argument('--root-dir', type=str, default='resources')
 argument_parser.add_argument('--gh-pages-url', type=str, required=True)
 args = argument_parser.parse_args()
 
@@ -22,6 +23,7 @@ GITHUB_REPOSITORY = os.getenv('GITHUB_REPOSITORY')
 GITHUB_PAGES_URL = args.gh_pages_url
 DEFAULT_PROFILE_DISCOVERED_ITEMS = args.default_profile
 EXCLUSIONS_FILE_PATH = args.exclusions_file
+ROOT_DIR_PATH = args.root_dir
 
 
 class SignPost:
@@ -166,4 +168,4 @@ def generate_linkset(root_dir, exclusions):
 
 if __name__ == '__main__':
     exclusions = read_exclusions_file(EXCLUSIONS_FILE_PATH)
-    generate_linkset(root_dir='resources', exclusions=exclusions)
+    generate_linkset(root_dir=ROOT_DIR_PATH, exclusions=exclusions)

@@ -23,6 +23,10 @@ inputs:
     description: 'Path to a file containing files that need to be excluded from item inclusion'
     required: true
     default: 'mkdocs.yml'
+  root-dir:
+    description: 'The root directory where to search for relevant items to be included'
+    required: true
+    default: 'resources'
 runs:
   using: "docker"
   image: "Dockerfile"
@@ -37,5 +41,7 @@ runs:
     - ${{ inputs.default-profile-discovered-items }}
     - "--gh-pages-url"
     - ${{ inputs.github-pages-url }}
-    - "-exclusions-file"
-    - ${{ exclusions-file }}
+    - "--exclusions-file"
+    - ${{ inputs.exclusions-file }}
+    - "--root-dir"
+    - ${{ inputs.root-dir }}
