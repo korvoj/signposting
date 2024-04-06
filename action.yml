@@ -1,0 +1,35 @@
+name: "Signposting"
+description: "Generate a JSON linkset to implement level 1 signposting in a repository"
+inputs:
+  github-server-url:
+    description: "URL of the GitHub server"
+    required: true
+    default: "https://github.com"
+  default-branch:
+    description: "The name of the default branch"
+    required: true
+    default: "main"
+  github-raw-content-url:
+    description: "URL for hosting GitHub raw content"
+    required: true
+    default: "https://raw.githubusercontent.com"
+  default-profile-discovered-items:
+    description: "Default profile to associate to discovered items in the repostiory"
+    required: true
+  github-pages-url:
+    description: 'URL of GitHub pages website'
+    required: true
+runs:
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - "--gh-server-url"
+    - ${{ inputs.github-server-url }}
+    - "--default-branch"
+    - ${{ inputs.default-branch }}
+    - "--raw-gh-content-url"
+    - ${{ inputs.github-raw-content-url }}
+    - "--default-profile"
+    - ${{ inputs.default-profile-discovered-items }}
+    - "--gh-pages-url"
+    - ${{ inputs.github-pages-url }}
