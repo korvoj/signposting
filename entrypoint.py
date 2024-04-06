@@ -11,6 +11,7 @@ argument_parser.add_argument('--gh-server-url', type=str, default='https://githu
 argument_parser.add_argument('--default-branch', type=str, default='main')
 argument_parser.add_argument('--default-profile', type=str, required=True)
 argument_parser.add_argument('--raw-gh-content-url', type=str, default='https://raw.githubusercontent.com')
+argument_parser.add_argument('--exclusions-file', type=str, default='mkdocs.yml')
 argument_parser.add_argument('--gh-pages-url', type=str, required=True)
 args = argument_parser.parse_args()
 
@@ -20,6 +21,7 @@ RAW_GITHUB_CONTENT_URL = args.raw_gh_content_url
 GITHUB_REPOSITORY = os.getenv('GITHUB_REPOSITORY')
 GITHUB_PAGES_URL = args.gh_pages_url
 DEFAULT_PROFILE_DISCOVERED_ITEMS = args.default_profile
+EXCLUSIONS_FILE_PATH = args.exclusions_file
 
 
 class SignPost:
@@ -50,7 +52,7 @@ def read_exclusions_file(exclusions_file_path):
     with open(exclusions_file_path) as stream:
         try:
             yaml_exclusions = yaml.safe_load(stream)
-            return yaml_exclusions.get('exclusions', [])
+            return yaml_exclusions.get('signposting_exclusions', [])
         except yaml.YAMLError as err:
             print('An error has occurred: ', err)
 
@@ -163,5 +165,5 @@ def generate_linkset(root_dir, exclusions):
 
 
 if __name__ == '__main__':
-    exclusions = read_exclusions_file('sexclusions.yaml')
+    exclusions = read_exclusions_file(EXCLUSIONS_FILE_PATH)
     generate_linkset(root_dir='resources', exclusions=exclusions)
