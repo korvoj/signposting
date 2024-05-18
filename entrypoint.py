@@ -45,7 +45,7 @@ class SignPost:
         json_representaton['href'] = self.href
         if self.type is not None:
             json_representaton['type'] = self.type
-        if self.profile is not None:
+        if self.profile is not None and str.strip(self.profile) != '':
             json_representaton['profile'] = self.profile
         return json_representaton
 
